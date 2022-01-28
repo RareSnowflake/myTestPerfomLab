@@ -1,0 +1,71 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.IO;
+
+namespace MyTestPerfLab
+{
+    class Program
+    {
+    
+        public static int[] Shift(int[] array, int shift)
+        {
+            var newArray = new int[array.Length];
+            shift -= array.Length;
+            if (shift < 0)
+            {
+                shift *= -1;
+            }
+
+
+            for (var i = 0; i < array.Length; i++)
+            {
+                var index = (i + shift) % array.Length;
+
+                newArray[i] = array[index];
+            }
+            return newArray;
+        }
+
+        static void Main(string[] args)
+        {
+           // ввод и инициализиация
+             int n, m;
+
+            n = int.Parse(Console.ReadLine());
+            m = int.Parse(Console.ReadLine());
+
+            int[] arr = new int[n];
+            for (int i = 0; i < n; i++)
+            {
+                arr[i] = i + 1;
+            }
+
+            //задачa
+            int firstElement = arr[0];
+            int nowElement = 1000;
+            var roud = new List<int>();
+            roud.Add(firstElement);
+            while (true)
+            {
+                for (int i = 0; i < m; i++)
+                {
+                    nowElement = arr[i];
+                    if (i == m - 1 && arr[i] != firstElement)
+                    {
+                        roud.Add(nowElement);
+                    }
+                }
+                if (nowElement == firstElement) break;
+                arr = Shift(arr, -m+1);
+            }
+            foreach (int el in roud)
+            {
+                Console.Write(el);
+            }
+
+        }
+        }
+        }
