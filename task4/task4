@@ -1,0 +1,43 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.IO;
+
+namespace MyTestPerfLab
+{
+    class Program
+    {
+
+        static void Main(String[] args)
+        {
+           
+            StreamReader sr1 = new StreamReader(args[0]);
+            string text1 = sr1.ReadToEnd();
+            char[] separators = { '\n' };
+            string[] textSplit1 = text1.Split(separators);
+            int[] nums = new int[textSplit1.Length];
+            for(int i = 0; i < textSplit1.Length; i++)
+            {
+                nums[i] = int.Parse(textSplit1[i]);
+            }
+
+            int counter = 0;
+            var mediana = CalcMediana(nums);
+
+            for(int i = 0; i<nums.Length; i++)
+            {
+                if (Math.Abs(mediana - nums[i]) != 0) counter += Math.Abs(mediana - nums[i]);
+            }
+            Console.WriteLine(counter);
+        }
+
+        private static int CalcMediana(int[] arr)
+        {
+            Array.Sort(arr);
+            return arr[arr.Length / 2];
+        }
+    }
+}
+   
